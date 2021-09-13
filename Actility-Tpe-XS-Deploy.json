@@ -1,0 +1,352 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "imageId": {
+      "type": "string",
+      "defaultValue": "/subscriptions/eb84fbbc-4d24-46b3-9085-fc1d9723e819/resourceGroups/c0e2edd6-a67c-e96b-6b4f-1df33a5998d5/providers/Microsoft.Compute/images/ActilityTpeImage",
+      "metadata": {
+        "description": "Id of the existing image"
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "defaultValue": "actility-tpe-xs",
+      "metadata": {
+        "description": "Name of the virtual machine."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_B2ms",
+      "metadata": {
+        "description": "Size of the virtual machine."
+      }
+    },
+    "adminUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies a username for the Virtual Machine."
+      }
+    },
+    "adminPassword": {
+      "type": "secureString",
+      "minLength": 12,
+      "metadata": {
+        "description": "Password for the Virtual Machine."
+      }
+    },
+    "authenticationType": {
+      "type": "string",
+      "defaultValue": "password",
+      "allowedValues": [
+        "password",
+        "sshPublicKey"
+      ],
+      "metadata": {
+        "description": "Type of authentication to use on the Virtual Machine."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "publicIPAllocationMethod": {
+      "type": "string",
+      "defaultValue": "Dynamic",
+      "allowedValues": [
+        "Dynamic",
+        "Static"
+      ],
+      "metadata": {
+        "description": "Allocation method for the Public IP used to access the Virtual Machine."
+      }
+    },
+    "publicIpSku": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ],
+      "metadata": {
+        "description": "SKU for the Public IP used to access the Virtual Machine."
+      }
+    }
+  },
+  "variables": {
+    "storageAccountName": "[format('actilitytpe{0}', uniqueString(resourceGroup().id))]",
+    "vNetName": "[concat(parameters('vmName'), '-vnet')]",
+    "vNetSubnetName": "default",
+    "vNetAddressPrefixes": "10.0.0.0/16",
+    "vNetSubnetAddressPrefix": "10.0.0.0/24",
+    "networkSecurityGroupName": "actility-tpe-ocp-nsg"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-04-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "Storage"
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2021-02-01",
+      "name": "[concat(parameters('vmName'),'-pip')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('publicIpSku')]"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAllocationMethod')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+            {
+                "name": "i1-1",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "UDP",
+                    "destinationPortRange": 500,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1000
+                }
+            },
+            {
+                "name": "i1-2",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "UDP",
+                    "destinationPortRange": 4500,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1001
+                }
+            },
+            {
+                "name": "i4",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 22,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1002
+                }
+            },
+            {
+                "name": "n1",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "UDP",
+                    "destinationPortRange": 123,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1003
+                }
+            },
+            {
+                "name": "n2",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "UDP",
+                    "destinationPortRange": 53,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1004
+                }
+            },
+            {
+                "name": "i6",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 2404,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1005
+                }
+            },
+            {
+                "name": "i10",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 443,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1006
+                }
+            },
+            {
+                "name": "n10",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 9090,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1007
+                }
+            },
+            {
+                "name": "n11",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 2222,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1008
+                }
+            },
+            {
+                "name": "n18",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "UDP",
+                    "destinationPortRange": 161,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1009
+                }
+            }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-05-01",
+      "name": "[variables('vNetName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vNetAddressPrefixes')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('vNetSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2021-02-01",
+      "name": "[concat(parameters('vmName'),'-nic')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('vmName'),'-pip'))]"
+              },
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('vNetSubnetName'))]"
+              }
+            }
+          }
+        ],
+        "enableIPForwarding": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('vmName'),'-pip'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', variables('vNetName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-03-01",
+      "name": "[parameters('vmName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[parameters('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "id": "[parameters('imageId')]"
+          },
+          "osDisk": {
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "StandardSSD_LRS"
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmName'),'-nic'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))).primaryEndpoints.blob]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('vmName'),'-nic'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ]
+    }
+  ]
+}
