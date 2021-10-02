@@ -4,7 +4,7 @@
   "parameters": {
     "imageId": {
       "type": "string",
-      "defaultValue": "/subscriptions/eb84fbbc-4d24-46b3-9085-fc1d9723e819/resourceGroups/c0e2edd6-a67c-e96b-6b4f-1df33a5998d5/providers/Microsoft.Compute/images/ActilityTpeImage",
+      "defaultValue": "/subscriptions/6595a534-54c4-4c34-9e4b-a5fdbe4bce5b/resourceGroups/TPX/providers/Microsoft.Compute/galleries/TPE_Azure/images/Tpe_Azure_custom_image",
       "metadata": {
         "description": "Id of the existing image"
       }
@@ -217,19 +217,6 @@
                     "destinationPortRange": 9090,
                     "destinationAddressPrefix": "*",
                     "priority": 1007
-                }
-            },
-            {
-                "name": "n11",
-                "properties": {
-                    "access": "Allow",
-                    "direction": "Inbound",
-                    "sourceAddressPrefix": "*",
-                    "sourcePortRange": "*",
-                    "protocol": "TCP",
-                    "destinationPortRange": 2222,
-                    "destinationAddressPrefix": "*",
-                    "priority": 1008
                 }
             },
             {
