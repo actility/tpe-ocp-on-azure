@@ -34,7 +34,6 @@ az account get-access-token
 
 Using your tenant ID:
 ```
-az account clear
 az login --service-principal -u '<app ID>' -p '<Secret>' --tenant '<your tenant ID>'
 az account get-access-token
 ```
