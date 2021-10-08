@@ -4,10 +4,11 @@ ARM template to deploy TPE OCP on Azure using Actility shared image.
 Prerequisites - AZ CLI - https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 Get from Actility - App information of shared gallery where TPE image is stored.
-    - Application name
-    - Actility tenant ID
-    - App (client) ID
-    - secret
+
+    1- Application name
+    2- Actility tenant ID
+    3- App (client) ID
+    4- secret
     
 Request access to application by signing in to the following link
 
