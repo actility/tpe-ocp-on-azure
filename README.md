@@ -40,6 +40,10 @@ az account get-access-token
 
 
 You can now deploy TPE using ARM:
+
+Please XS template for up to 5 gateways and 1000 sensors (Azure VM - D2s_v3)
+Please S  template for up to 10 gateways and 2000 sensors ( Azure VM - D4s_v3)
+
 ```
 az deployment group create --name tpeDeploy --resource-group <your-resource-group> --template-file Actility-Tpe-XS-Deploy.json --aux-tenants <Actility tenant ID>
 ```
