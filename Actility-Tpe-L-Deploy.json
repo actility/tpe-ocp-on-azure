@@ -11,14 +11,14 @@
     },
     "vmName": {
       "type": "string",
-      "defaultValue": "actility-tpe-s",
+      "defaultValue": "actility-tpe-l",
       "metadata": {
         "description": "Name of the virtual machine."
       }
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D2s_v4",
+      "defaultValue": "Standard_D4s_v5",
       "metadata": {
         "description": "Size of the virtual machine."
       }
