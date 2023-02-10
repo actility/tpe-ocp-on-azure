@@ -18,7 +18,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D2s_v3",
+      "defaultValue": "Standard_D2s_v4",
       "metadata": {
         "description": "Size of the virtual machine."
       }
@@ -92,7 +92,7 @@
       "name": "[variables('storageAccountName')]",
       "location": "[parameters('location')]",
       "sku": {
-        "name": "Standard_LRS"
+        "name": "Premium_LRS"
       },
       "kind": "Storage"
     },
@@ -312,7 +312,7 @@
           "osDisk": {
             "createOption": "FromImage",
             "managedDisk": {
-              "storageAccountType": "Standard_LRS"
+              "storageAccountType": "Premium_LRS"
             }
           }
         },
