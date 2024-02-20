@@ -4,7 +4,7 @@
   "parameters": {
     "imageId": {
       "type": "string",
-      "defaultValue": "/subscriptions/6595a534-54c4-4c34-9e4b-a5fdbe4bce5b/resourceGroups/rd-tpe-ocp/providers/Microsoft.Compute/galleries/actility_operation_gallery/images/Tpe_Azure_custom_image/versions/7.3.1",
+      "defaultValue": "/subscriptions/6595a534-54c4-4c34-9e4b-a5fdbe4bce5b/resourceGroups/rd-tpe-ocp/providers/Microsoft.Compute/galleries/actility_operation_gallery/images/Tpe_Azure_custom_image/versions/7.3.2",
       "metadata": {
         "description": "Id of the existing image"
       }
