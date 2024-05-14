@@ -6,7 +6,7 @@ Easily deploy ThingPark Enterprise (TPE) with [Azure Resource Manager (ARM) temp
 
 - Actility-TPE-\<segment\>-Deploy.json: Azure Resource Management (ARM) templates.
 
-For more details about the hardware sizing **segments**, please refer to the [ThingPark Enterprise documentation](https://thingpark.page.link/TPE-OCP_sizing)
+For more details about the hardware sizing **segments**, please refer to the [ThingPark Enterprise documentation]([https://thingpark.page.link/TPE-OCP_sizing](https://docs.thingpark.com/thingpark-enterprise/7.3/docs/ocp-tpe/appliance/size-hardware)
 
 ## Prerequisites
 
