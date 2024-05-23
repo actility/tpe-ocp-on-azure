@@ -91,9 +91,6 @@
       "apiVersion": "2021-04-01",
       "name": "[variables('storageAccountName')]",
       "location": "[parameters('location')]",
-      "sku": {
-        "name": "Premium_LRS"
-      },
       "kind": "Storage"
     },
     {
@@ -325,8 +322,7 @@
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
-            "enabled": true,
-            "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))).primaryEndpoints.blob]"
+            "enabled": true
           }
         }
       },
