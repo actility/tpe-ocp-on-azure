@@ -91,7 +91,10 @@
       "apiVersion": "2021-04-01",
       "name": "[variables('storageAccountName')]",
       "location": "[parameters('location')]",
-      "kind": "Storage"
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2"
     },
     {
       "type": "Microsoft.Network/publicIPAddresses",
