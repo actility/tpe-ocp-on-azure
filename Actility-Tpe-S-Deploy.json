@@ -18,7 +18,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D2s_v4",
+      "defaultValue": "Standard_D2as_v4",
       "metadata": {
         "description": "Size of the virtual machine."
       }
@@ -311,6 +311,7 @@
           },
           "osDisk": {
             "createOption": "FromImage",
+	    "diskSizeGB": 90,
             "managedDisk": {
               "storageAccountType": "Premium_LRS"
             }
