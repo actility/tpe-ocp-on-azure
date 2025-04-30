@@ -18,7 +18,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_D4s_v5",
+      "defaultValue": "Standard_D4as_v4",
       "metadata": {
         "description": "Size of the virtual machine."
       }
@@ -231,6 +231,123 @@
                     "destinationAddressPrefix": "*",
                     "priority": 1009
                 }
+            },
+            {
+                "name": "n19",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 4443,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1010
+                }
+            },
+            {
+                "name": "n20",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 3001,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1011
+                }
+            },
+            {
+                "name": "n21",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 3002,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1012
+                }
+            },
+            {
+                "name": "n22",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 3003,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1013
+                }
+            },
+            {
+                "name": "n23",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 21,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1014
+                }
+            },
+            {
+                "name": "n24",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 10502,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1015
+                }
+            },
+            {
+                "name": "n25",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": 11502,
+                    "destinationAddressPrefix": "*",
+                    "priority": 1016
+                }
+            },
+            {
+                "name": "n26",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": "502-507",
+                    "destinationAddressPrefix": "*",
+                    "priority": 1017
+                }
+            },
+            {
+                "name": "n27",
+                "properties": {
+                    "access": "Allow",
+                    "direction": "Inbound",
+                    "sourceAddressPrefix": "*",
+                    "sourcePortRange": "*",
+                    "protocol": "TCP",
+                    "destinationPortRange": "4840-4845",
+                    "destinationAddressPrefix": "*",
+                    "priority": 1018
+                }
             }
         ]
       }
@@ -311,6 +428,7 @@
           },
           "osDisk": {
             "createOption": "FromImage",
+	    "diskSizeGB": 110,
             "managedDisk": {
               "storageAccountType": "Premium_LRS"
             }
